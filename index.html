@@ -29,7 +29,7 @@
     .floating-delay { animation: floating 3s ease-in-out infinite; animation-delay: 1.5s; }
     @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
     .card-shadow {
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2), 
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2),
                   0 5px 15px -5px rgba(0,0,0,0.1),
                   inset 0 -3px 0 rgba(0,0,0,0.1);
     }
@@ -47,24 +47,30 @@
     .category-btn:hover { transform: translateY(-3px); }
     .category-btn.active { transform: scale(1.05); }
     @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    .border-colors { border-color: #FDE68A; }
+    #loading-indicator { display: none; text-align: center; padding: 40px; }
+    .spinner { display: inline-block; width: 48px; height: 48px; border: 5px solid #E9D5FF; border-top-color: #7C3AED; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
  </head>
  <body class="h-full font-nunito">
   <div id="app-wrapper" class="w-full h-full overflow-auto">
    <div class="min-h-full w-full blob-bg relative">
-    <!-- Decorative Clouds -->
-    <div class="cloud floating" style="top: 5%; left: 5%;">
+
+    <!-- Clouds -->
+    <div class="cloud floating" style="top:5%;left:5%;">
      <svg width="80" height="50" viewBox="0 0 80 50" fill="white"><ellipse cx="25" cy="30" rx="20" ry="15"/><ellipse cx="45" cy="25" rx="25" ry="20"/><ellipse cx="60" cy="32" rx="18" ry="13"/></svg>
     </div>
-    <div class="cloud floating-delay" style="top: 10%; right: 10%;">
+    <div class="cloud floating-delay" style="top:10%;right:10%;">
      <svg width="100" height="60" viewBox="0 0 100 60" fill="white"><ellipse cx="30" cy="35" rx="25" ry="18"/><ellipse cx="55" cy="30" rx="30" ry="22"/><ellipse cx="75" cy="38" rx="20" ry="15"/></svg>
     </div>
 
     <div class="relative z-10 px-4 py-8 md:px-8 lg:px-16">
+
      <!-- Header -->
      <header class="text-center mb-12">
       <h1 class="font-bubble text-4xl md:text-6xl lg:text-7xl text-purple-600 title-shadow mb-4">Galeri Kegiatan</h1>
-      <h2 class="font-bubble text-2xl md:text-4xl lg:text-5xl mb-6 text-yellow-500" style="text-shadow: 2px 2px 0 #FF6B6B, 4px 4px 0 rgba(0,0,0,0.1);">KB-TK PUTRA IX</h2>
+      <h2 class="font-bubble text-2xl md:text-4xl lg:text-5xl mb-6 text-yellow-500" style="text-shadow:2px 2px 0 #FF6B6B,4px 4px 0 rgba(0,0,0,0.1);">KB-TK PUTRA IX</h2>
       <div class="flex items-center justify-center gap-4 mb-8">
        <div class="h-1 w-32 md:w-48 bg-gradient-to-r from-blue-400 via-yellow-400 to-blue-400 rounded-full"></div>
       </div>
@@ -80,220 +86,34 @@
       <button onclick="filterGallery('keagamaan')" class="category-btn px-5 py-2 bg-blue-400 text-white rounded-full font-bold card-shadow" data-category="keagamaan">Keagamaan</button>
      </div>
 
-     <!-- Gallery Grid -->
-     <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(0)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-yellow-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1P791jCPYVSLiEiCXP2Fn8H7_mKHLV8i-&sz=w800" alt="Bermain Lego" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-purple-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">BERMAIN LEGO</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-yellow-100 to-orange-100">
-         <h3 class="font-bubble text-lg text-purple-600">Bermain Lego</h3>
-         <p class="text-sm text-gray-600">Kreativitas tanpa batas</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="fieldtrip" onclick="openLightbox(1)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-green-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=18hhf-CO8hmR4EKbyP7AKSfFwyZxhv13q&sz=w800" alt="Fieldtrip Enchanting Valley" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-green-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">ENCHANTING VALLEY</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-green-100 to-teal-100">
-         <h3 class="font-bubble text-lg text-green-600">Fieldtrip Taman Safari</h3>
-         <p class="text-sm text-gray-600">Enchanting Valley Adventure</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="fieldtrip" onclick="openLightbox(2)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-blue-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1Kx_GPlGiYWMDAt4zyMKKHZCuWPsPuUKm&sz=w800" alt="Fieldtrip TK A dan TK B" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-blue-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">FIELDTRIP TK A &amp; B</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-blue-100 to-purple-100">
-         <h3 class="font-bubble text-lg text-blue-600">Fieldtrip TK A dan TK B</h3>
-         <p class="text-sm text-gray-600">Petualangan seru bersama</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(3)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-red-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1bR8Nxl9MMBk1QPh5nPFcDiCDIyQtPy5Z&sz=w800" alt="Kunjungan Satlantas" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-red-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">KUNJUNGAN SATLANTAS</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-red-100 to-orange-100">
-         <h3 class="font-bubble text-lg text-red-500">Kunjungan Satlantas Polres</h3>
-         <p class="text-sm text-gray-600">Donasi mainan mobil-mobilan</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="keagamaan" onclick="openLightbox(4)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-emerald-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1xaL-kVlHJCx1o93d3r60NZnoZV-Y_1ft&sz=w800" alt="Pesantren Ramadhan" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-emerald-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">PESANTREN RAMADHAN</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-emerald-100 to-green-100">
-         <h3 class="font-bubble text-lg text-emerald-600">Pesantren Ramadhan</h3>
-         <p class="text-sm text-gray-600">Belajar agama bersama</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(5)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-indigo-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1g80ZT3iJAV4lp_tWjwthxmKrPJPWx3lW&sz=w800" alt="Upacara Senin Pagi" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-indigo-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">UPACARA SENIN PAGI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-indigo-100 to-blue-100">
-         <h3 class="font-bubble text-lg text-indigo-600">Upacara Senin Pagi</h3>
-         <p class="text-sm text-gray-600">Semangat nasionalisme</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="lomba" onclick="openLightbox(6)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-pink-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1O8chzuqIGjRWNTtSPeASIHmMMn7en0dU&sz=w800" alt="Lomba Menari Porseni" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-pink-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">LOMBA MENARI PORSENI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-pink-100 to-purple-100">
-         <h3 class="font-bubble text-lg text-pink-600">Lomba Menari Porseni</h3>
-         <p class="text-sm text-gray-600">Tingkat Kab. Tangerang di Ancol</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="lomba" onclick="openLightbox(7)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-amber-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1lKSKuKzwLMeZO7s-OlVvQmE3gV6A_oe1&sz=w800" alt="Lomba Mewarnai" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-amber-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">LOMBA MEWARNAI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-amber-100 to-yellow-100">
-         <h3 class="font-bubble text-lg text-amber-600">Lomba Mewarnai</h3>
-         <p class="text-sm text-gray-600">Warna-warni kreativitas</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="lomba" onclick="openLightbox(8)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-rose-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=18eoXQz8wK2SIAVEfXMb3dAeqM7_pJdRV&sz=w800" alt="Lomba Busana Daerah" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-rose-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">LOMBA BUSANA DAERAH</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-rose-100 to-pink-100">
-         <h3 class="font-bubble text-lg text-rose-600">Lomba Busana Daerah</h3>
-         <p class="text-sm text-gray-600">Keindahan budaya Indonesia</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="keagamaan" onclick="openLightbox(9)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-teal-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1LdBLuX_LZy5H8PkYc-WNzOgX5A52GZGK&sz=w800" alt="Manasik Haji" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-teal-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">MANASIK HAJI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-teal-100 to-cyan-100">
-         <h3 class="font-bubble text-lg text-teal-600">Manasik Haji</h3>
-         <p class="text-sm text-gray-600">Belajar ibadah haji</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(10)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-cyan-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1d1KEVJdeSIQVYDo7xOwGxT-n1UCbcVxt&sz=w800" alt="Membuat Gedung Konstruksi" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-cyan-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">MEMBUAT GEDUNG</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-cyan-100 to-blue-100">
-         <h3 class="font-bubble text-lg text-cyan-600">Membuat Gedung/Konstruksi</h3>
-         <p class="text-sm text-gray-600">Materi Ke-PU an</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(11)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-violet-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1bkllU_ADOF1oksbOK3B-fdfP5s4T2MHn&sz=w800" alt="Membuat Maket Kota" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-violet-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">MEMBUAT MAKET KOTA</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-violet-100 to-purple-100">
-         <h3 class="font-bubble text-lg text-violet-600">Membuat Maket "Kota"</h3>
-         <p class="text-sm text-gray-600">Materi Ke-PU an</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="fieldtrip" onclick="openLightbox(12)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-lime-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=15hFrIpmio5Uw0iHjsyclhD7BudmL5ygc&sz=w800" alt="Outingclass Batalyon Kaveleri" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-lime-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">OUTINGCLASS KAVELERI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-lime-100 to-green-100">
-         <h3 class="font-bubble text-lg text-lime-600">Outingclass TK B</h3>
-         <p class="text-sm text-gray-600">Ke Batalyon Kaveleri</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(13)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-orange-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1uvdZlneb6Y2HUbAwzpcglqKhBkV8V3qz&sz=w800" alt="Bermain Sepeda KB" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-orange-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">BERMAIN SEPEDA KB</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-orange-100 to-amber-100">
-         <h3 class="font-bubble text-lg text-orange-600">Bermain Sepeda KB</h3>
-         <p class="text-sm text-gray-600">Gowes seru bersama!</p>
-        </div>
-       </div>
-      </div>
-
-      <div class="gallery-item cursor-pointer" data-category="aktivitas" onclick="openLightbox(14)">
-       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border border-sky-300">
-        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=1_qK1A-fr0Cc9VCdUgU5rRx-7hRaEeSw9&sz=w800" alt="Senam Pagi" class="gallery-image w-full h-full object-cover" loading="lazy">
-         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-sky-600/80 to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">SENAM PAGI</span></div>
-        </div>
-        <div class="p-4 bg-gradient-to-r from-sky-100 to-blue-100">
-         <h3 class="font-bubble text-lg text-sky-600">Senam Pagi</h3>
-         <p class="text-sm text-gray-600">Sehat dan bugar selalu!</p>
-        </div>
-       </div>
-      </div>
+     <!-- Loading -->
+     <div id="loading-indicator">
+      <div class="spinner"></div>
+      <p class="mt-4 text-purple-500 font-bold font-bubble text-xl">Memuat foto...</p>
      </div>
+
+     <!-- Gallery Grid -->
+     <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"></div>
 
      <!-- Video Section -->
      <div class="mt-16 mb-8">
       <h2 class="font-bubble text-4xl md:text-5xl text-center mb-4 text-purple-600">Penampilan Spesial</h2>
-      
-      <!-- YouTube Channel Button -->
       <div class="flex justify-center mb-10">
        <a href="https://www.youtube.com/@tkputraixtangerang39" target="_blank" rel="noopener noreferrer"
           class="flex items-center gap-3 px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-lg card-shadow transition-all duration-300 hover:scale-105">
-        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-        </svg>
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         Kunjungi Channel YouTube Kami
        </a>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-       <!-- Video 1 -->
        <a href="https://youtu.be/cAviCNBiTPY?si=Garu-e2JeOY6oGgZ" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video bg-gray-200">
-          <img src="https://drive.google.com/thumbnail?id=1Qv7LzGtEwseZdiyc33uZpP_JRFnqMW6K&sz=w400" alt="Penampilan TK B1: Tari Tor-Tor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
+          <img src="https://drive.google.com/thumbnail?id=1Qv7LzGtEwseZdiyc33uZpP_JRFnqMW6K&sz=w400" alt="Tari Tor-Tor TK B1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform">
-            <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform"><svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
-          <!-- YouTube badge -->
-          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-           YouTube
-          </div>
+          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">YouTube</div>
          </div>
          <div class="p-4 bg-gradient-to-r from-purple-100 to-pink-100">
           <h3 class="font-bubble text-lg text-purple-600">Tari Tor-Tor TK B1</h3>
@@ -301,21 +121,14 @@
          </div>
         </div>
        </a>
-
-       <!-- Video 2 -->
        <a href="https://youtu.be/74W6YyDV2vw?si=c2wUq81nM5TzifWa" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video bg-gray-200">
-          <img src="https://drive.google.com/thumbnail?id=1VgZzhwpsxPAgHemXpyHqzzpkhL-KHitV&sz=w400" alt="Penampilan Drumband TK B" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
+          <img src="https://drive.google.com/thumbnail?id=1VgZzhwpsxPAgHemXpyHqzzpkhL-KHitV&sz=w400" alt="Drumband TK B" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform">
-            <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform"><svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
-          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-           YouTube
-          </div>
+          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">YouTube</div>
          </div>
          <div class="p-4 bg-gradient-to-r from-blue-100 to-cyan-100">
           <h3 class="font-bubble text-lg text-blue-600">Drumband TK B</h3>
@@ -323,21 +136,14 @@
          </div>
         </div>
        </a>
-
-       <!-- Video 3 -->
        <a href="https://youtu.be/DMqkaYnlEX0?si=Dfhxh_ra_OuCtQB" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video bg-gray-200">
-          <img src="https://drive.google.com/thumbnail?id=1H1eL1sNMGOKuZebO6j7RaDbYYGeiuz1m&sz=w400" alt="Penampilan TK A2: Tari Mbok Jamu" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
+          <img src="https://drive.google.com/thumbnail?id=1H1eL1sNMGOKuZebO6j7RaDbYYGeiuz1m&sz=w400" alt="Tari Mbok Jamu TK A2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" loading="lazy">
           <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform">
-            <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform"><svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
-          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-           YouTube
-          </div>
+          <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">YouTube</div>
          </div>
          <div class="p-4 bg-gradient-to-r from-green-100 to-emerald-100">
           <h3 class="font-bubble text-lg text-green-600">Tari Mbok Jamu TK A2</h3>
@@ -348,41 +154,26 @@
       </div>
      </div>
 
-     <!-- Instagram Reels Section -->
+     <!-- Instagram Reels -->
      <div class="mt-12 mb-8">
       <h2 class="font-bubble text-4xl md:text-5xl text-center mb-4 text-pink-500">Reels Instagram</h2>
-
-      <!-- Instagram Profile Button -->
       <div class="flex justify-center mb-10">
        <a href="https://www.instagram.com/tkputraix/" target="_blank" rel="noopener noreferrer"
           class="flex items-center gap-3 px-8 py-3 text-white rounded-full font-bold text-lg card-shadow transition-all duration-300 hover:scale-105"
-          style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
-        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
+          style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
         Kunjungi Instagram Kami
        </a>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-       <!-- IG Reel 1: Outing Class KB -->
        <a href="https://www.instagram.com/reel/DUfHOuDElcg/?igsh=MXhhN21ubmg3dDNjcg==" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video">
-          <div class="absolute inset-0 flex items-center justify-center" style="background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
-           <div class="text-center text-white px-4">
-            <svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            <p class="font-bubble text-xl">Outing Class KB</p>
-           </div>
+          <div class="absolute inset-0 flex items-center justify-center" style="background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+           <div class="text-center text-white px-4"><svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg><p class="font-bubble text-xl">Outing Class KB</p></div>
           </div>
           <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90">
-            <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
-          </div>
-          <div class="absolute top-3 right-3 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1" style="background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-           Reels
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90"><svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
          </div>
          <div class="p-4 bg-gradient-to-r from-pink-100 to-rose-100">
@@ -391,25 +182,14 @@
          </div>
         </div>
        </a>
-
-       <!-- IG Reel 2: English Fun Activity -->
        <a href="https://www.instagram.com/reel/DRtbYJcEonS/?igsh=MWdhYnMxZmR4cDFkcA==" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video">
-          <div class="absolute inset-0 flex items-center justify-center" style="background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
-           <div class="text-center text-white px-4">
-            <svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            <p class="font-bubble text-xl">English Fun Activity</p>
-           </div>
+          <div class="absolute inset-0 flex items-center justify-center" style="background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+           <div class="text-center text-white px-4"><svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg><p class="font-bubble text-xl">English Fun Activity</p></div>
           </div>
           <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90">
-            <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
-          </div>
-          <div class="absolute top-3 right-3 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1" style="background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-           Reels
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90"><svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
          </div>
          <div class="p-4 bg-gradient-to-r from-orange-100 to-pink-100">
@@ -418,25 +198,14 @@
          </div>
         </div>
        </a>
-
-       <!-- IG Reel 3: Pesantren Ramadhan -->
        <a href="https://www.instagram.com/reel/DVPmnj2Ejeh/?igsh=MXEyd2V2aGxweHEycg==" target="_blank" rel="noopener noreferrer" class="group">
         <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
          <div class="relative overflow-hidden aspect-video">
-          <div class="absolute inset-0 flex items-center justify-center" style="background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
-           <div class="text-center text-white px-4">
-            <svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            <p class="font-bubble text-xl">Pesantren Ramadhan 1447H</p>
-           </div>
+          <div class="absolute inset-0 flex items-center justify-center" style="background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
+           <div class="text-center text-white px-4"><svg class="w-14 h-14 mx-auto mb-3 opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.w-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg><p class="font-bubble text-xl">Pesantren Ramadhan 1447H</p></div>
           </div>
           <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all flex items-center justify-center">
-           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90">
-            <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-           </div>
-          </div>
-          <div class="absolute top-3 right-3 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1" style="background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);">
-           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-           Reels
+           <div class="bg-white rounded-full p-4 group-hover:scale-125 transition-transform opacity-90"><svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
          </div>
          <div class="p-4 bg-gradient-to-r from-purple-100 to-pink-100">
@@ -451,7 +220,7 @@
     </div>
    </div>
 
-   <!-- Lightbox Modal -->
+   <!-- Lightbox -->
    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
     <div class="lightbox-content" onclick="event.stopPropagation()">
      <span class="lightbox-close" onclick="closeLightbox(event)">×</span>
@@ -466,29 +235,141 @@
   </div>
 
   <script>
-    const galleryData = [
-      { id: '1P791jCPYVSLiEiCXP2Fn8H7_mKHLV8i-', title: 'Bermain Lego' },
-      { id: '18hhf-CO8hmR4EKbyP7AKSfFwyZxhv13q', title: 'Fieldtrip Enchanting Valley by Taman Safari' },
-      { id: '1Kx_GPlGiYWMDAt4zyMKKHZCuWPsPuUKm', title: 'Fieldtrip TK A dan TK B' },
-      { id: '1bR8Nxl9MMBk1QPh5nPFcDiCDIyQtPy5Z', title: 'Kunjungan Satlantas Polres Tangsel - Donasi Mainan Mobil-mobilan' },
-      { id: '1xaL-kVlHJCx1o93d3r60NZnoZV-Y_1ft', title: 'Pesantren Ramadhan' },
-      { id: '1g80ZT3iJAV4lp_tWjwthxmKrPJPWx3lW', title: 'Upacara Senin Pagi' },
-      { id: '1O8chzuqIGjRWNTtSPeASIHmMMn7en0dU', title: 'Lomba Menari Porseni Tingkat Kab. Tangerang di Ancol' },
-      { id: '1lKSKuKzwLMeZO7s-OlVvQmE3gV6A_oe1', title: 'Lomba Mewarnai' },
-      { id: '18eoXQz8wK2SIAVEfXMb3dAeqM7_pJdRV', title: 'Lomba Busana Daerah' },
-      { id: '1LdBLuX_LZy5H8PkYc-WNzOgX5A52GZGK', title: 'Manasik Haji' },
-      { id: '1d1KEVJdeSIQVYDo7xOwGxT-n1UCbcVxt', title: 'Membuat Gedung/Konstruksi - Materi Ke-PU an' },
-      { id: '1bkllU_ADOF1oksbOK3B-fdfP5s4T2MHn', title: 'Membuat Maket "Kota" - Materi Ke-PU an' },
-      { id: '15hFrIpmio5Uw0iHjsyclhD7BudmL5ygc', title: 'Outingclass TK B - Ke Batalyon Kaveleri' },
-      { id: '1uvdZlneb6Y2HUbAwzpcglqKhBkV8V3qz', title: 'Bermain Sepeda KB' },
-      { id: '1_qK1A-fr0Cc9VCdUgU5rRx-7hRaEeSw9', title: 'Senam Pagi' }
+    // =============================================
+    // GANTI URL INI DENGAN URL APPS SCRIPT KAMU!
+    // =============================================
+    const APPS_SCRIPT_URL = 'PASTE_URL_APPS_SCRIPT_DISINI';
+
+    // Data foto lama (tetap tampil kalau Google Sheet kosong)
+    const STATIC_PHOTOS = [
+      { id: '1P791jCPYVSLiEiCXP2Fn8H7_mKHLV8i-', judul: 'Bermain Lego', deskripsi: 'Kreativitas tanpa batas', kategori: 'aktivitas' },
+      { id: '18hhf-CO8hmR4EKbyP7AKSfFwyZxhv13q', judul: 'Fieldtrip Enchanting Valley', deskripsi: 'Enchanting Valley Adventure', kategori: 'fieldtrip' },
+      { id: '1Kx_GPlGiYWMDAt4zyMKKHZCuWPsPuUKm', judul: 'Fieldtrip TK A dan TK B', deskripsi: 'Petualangan seru bersama', kategori: 'fieldtrip' },
+      { id: '1bR8Nxl9MMBk1QPh5nPFcDiCDIyQtPy5Z', judul: 'Kunjungan Satlantas Polres', deskripsi: 'Donasi mainan mobil-mobilan', kategori: 'aktivitas' },
+      { id: '1xaL-kVlHJCx1o93d3r60NZnoZV-Y_1ft', judul: 'Pesantren Ramadhan', deskripsi: 'Belajar agama bersama', kategori: 'keagamaan' },
+      { id: '1g80ZT3iJAV4lp_tWjwthxmKrPJPWx3lW', judul: 'Upacara Senin Pagi', deskripsi: 'Semangat nasionalisme', kategori: 'aktivitas' },
+      { id: '1O8chzuqIGjRWNTtSPeASIHmMMn7en0dU', judul: 'Lomba Menari Porseni', deskripsi: 'Tingkat Kab. Tangerang di Ancol', kategori: 'lomba' },
+      { id: '1lKSKuKzwLMeZO7s-OlVvQmE3gV6A_oe1', judul: 'Lomba Mewarnai', deskripsi: 'Warna-warni kreativitas', kategori: 'lomba' },
+      { id: '18eoXQz8wK2SIAVEfXMb3dAeqM7_pJdRV', judul: 'Lomba Busana Daerah', deskripsi: 'Keindahan budaya Indonesia', kategori: 'lomba' },
+      { id: '1LdBLuX_LZy5H8PkYc-WNzOgX5A52GZGK', judul: 'Manasik Haji', deskripsi: 'Belajar ibadah haji', kategori: 'keagamaan' },
+      { id: '1d1KEVJdeSIQVYDo7xOwGxT-n1UCbcVxt', judul: 'Membuat Gedung/Konstruksi', deskripsi: 'Materi Ke-PU an', kategori: 'aktivitas' },
+      { id: '1bkllU_ADOF1oksbOK3B-fdfP5s4T2MHn', judul: 'Membuat Maket Kota', deskripsi: 'Materi Ke-PU an', kategori: 'aktivitas' },
+      { id: '15hFrIpmio5Uw0iHjsyclhD7BudmL5ygc', judul: 'Outingclass TK B - Batalyon Kaveleri', deskripsi: 'Seru banget!', kategori: 'fieldtrip' },
+      { id: '1uvdZlneb6Y2HUbAwzpcglqKhBkV8V3qz', judul: 'Bermain Sepeda KB', deskripsi: 'Gowes seru bersama!', kategori: 'aktivitas' },
+      { id: '1_qK1A-fr0Cc9VCdUgU5rRx-7hRaEeSw9', judul: 'Senam Pagi', deskripsi: 'Sehat dan bugar selalu!', kategori: 'aktivitas' }
     ];
 
-    let currentImageIndex = 0;
+    const borderColors = {
+      aktivitas: 'border-yellow-300',
+      fieldtrip: 'border-green-300',
+      lomba: 'border-pink-300',
+      keagamaan: 'border-blue-300'
+    };
+    const gradients = {
+      aktivitas: 'from-yellow-100 to-orange-100',
+      fieldtrip: 'from-green-100 to-teal-100',
+      lomba: 'from-pink-100 to-purple-100',
+      keagamaan: 'from-blue-100 to-indigo-100'
+    };
+    const titleColors = {
+      aktivitas: 'text-orange-500',
+      fieldtrip: 'text-green-600',
+      lomba: 'text-pink-600',
+      keagamaan: 'text-blue-600'
+    };
+    const overlayColors = {
+      aktivitas: 'from-orange-600/80',
+      fieldtrip: 'from-green-600/80',
+      lomba: 'from-pink-600/80',
+      keagamaan: 'from-blue-600/80'
+    };
 
+    let allPhotos = [];
+    let currentIndex = 0;
+    let currentFilter = 'all';
+
+    function buildCard(photo, index) {
+      const bc = borderColors[photo.kategori] || 'border-purple-300';
+      const gr = gradients[photo.kategori] || 'from-purple-100 to-pink-100';
+      const tc = titleColors[photo.kategori] || 'text-purple-600';
+      const ov = overlayColors[photo.kategori] || 'from-purple-600/80';
+      return `
+        <div class="gallery-item cursor-pointer" data-category="${photo.kategori}" onclick="openLightbox(${index})">
+          <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border ${bc}">
+            <div class="relative overflow-hidden aspect-[4/3]">
+              <img src="https://drive.google.com/thumbnail?id=${photo.id}&sz=w800"
+                   alt="${photo.judul}" class="gallery-image w-full h-full object-cover" loading="lazy"
+                   onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22150%22><rect fill=%22%23F3F4F6%22 width=%22200%22 height=%22150%22/><text x=%22100%22 y=%2280%22 text-anchor=%22middle%22 fill=%22%239CA3AF%22 font-size=%2214%22>Foto</text></svg>'">
+              <div class="gallery-overlay absolute inset-0 bg-gradient-to-t ${ov} to-transparent flex items-end p-4">
+                <span class="text-white font-bold text-lg">${photo.judul.toUpperCase()}</span>
+              </div>
+            </div>
+            <div class="p-4 bg-gradient-to-r ${gr}">
+              <h3 class="font-bubble text-lg ${tc}">${photo.judul}</h3>
+              <p class="text-sm text-gray-600">${photo.deskripsi || ''}</p>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderGallery(photos) {
+      allPhotos = photos;
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = photos.map((p, i) => buildCard(p, i)).join('');
+      applyFilter(currentFilter);
+    }
+
+    function applyFilter(category) {
+      currentFilter = category;
+      const items = document.querySelectorAll('.gallery-item');
+      const buttons = document.querySelectorAll('.category-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.category === category) btn.classList.add('active');
+      });
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+          item.style.animation = 'none';
+          item.offsetHeight;
+          item.style.animation = 'fadeIn 0.5s ease';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function filterGallery(category) {
+      applyFilter(category);
+    }
+
+    async function loadFromSheet() {
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxRwZHaxpuFUbclRflnSzXCf00MzHWiJbv5vilR1t2UfvVDWIZUpYzjLYvEIyys5mKD9g/exec') {
+        renderGallery(STATIC_PHOTOS);
+        return;
+      }
+      document.getElementById('loading-indicator').style.display = 'block';
+      document.getElementById('gallery-grid').innerHTML = '';
+      try {
+        const resp = await fetch(APPS_SCRIPT_URL + '?t=' + Date.now());
+        const sheetPhotos = await resp.json();
+        // Gabungkan: foto lama + foto baru dari Sheet (hindari duplikat by id)
+        const sheetIds = sheetPhotos.map(p => p.id);
+        const staticOnly = STATIC_PHOTOS.filter(p => !sheetIds.includes(p.id));
+        const combined = [...staticOnly, ...sheetPhotos];
+        renderGallery(combined.length > 0 ? combined : STATIC_PHOTOS);
+      } catch(e) {
+        // Kalau gagal, tampilkan foto lama
+        renderGallery(STATIC_PHOTOS);
+      } finally {
+        document.getElementById('loading-indicator').style.display = 'none';
+      }
+    }
+
+    // Lightbox
     function openLightbox(index) {
-      currentImageIndex = index;
-      updateLightboxContent();
+      currentIndex = index;
+      updateLightbox();
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -500,54 +381,34 @@
       }
     }
 
-    function updateLightboxContent() {
-      const item = galleryData[currentImageIndex];
-      document.getElementById('lightbox-image').src = `https://drive.google.com/thumbnail?id=${item.id}&sz=w1200`;
-      document.getElementById('lightbox-image').alt = item.title;
-      document.getElementById('lightbox-caption').textContent = item.title;
+    function updateLightbox() {
+      const p = allPhotos[currentIndex];
+      document.getElementById('lightbox-image').src = `https://drive.google.com/thumbnail?id=${p.id}&sz=w1200`;
+      document.getElementById('lightbox-image').alt = p.judul;
+      document.getElementById('lightbox-caption').textContent = p.judul;
     }
 
     function prevImage() {
-      currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
-      updateLightboxContent();
+      currentIndex = (currentIndex - 1 + allPhotos.length) % allPhotos.length;
+      updateLightbox();
     }
 
     function nextImage() {
-      currentImageIndex = (currentImageIndex + 1) % galleryData.length;
-      updateLightboxContent();
-    }
-
-    function filterGallery(category) {
-      const items = document.querySelectorAll('.gallery-item');
-      const buttons = document.querySelectorAll('.category-btn');
-      buttons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.category === category) btn.classList.add('active');
-      });
-      items.forEach(item => {
-        const itemCategory = item.dataset.category;
-        if (category === 'all' || itemCategory === category) {
-          item.style.display = 'block';
-          item.style.animation = 'none';
-          item.offsetHeight;
-          item.style.animation = 'fadeIn 0.5s ease';
-        } else {
-          item.style.display = 'none';
-        }
-      });
+      currentIndex = (currentIndex + 1) % allPhotos.length;
+      updateLightbox();
     }
 
     document.addEventListener('keydown', (e) => {
-      const lightbox = document.getElementById('lightbox');
-      if (lightbox.classList.contains('active')) {
+      const lb = document.getElementById('lightbox');
+      if (lb.classList.contains('active')) {
         if (e.key === 'ArrowLeft') prevImage();
         else if (e.key === 'ArrowRight') nextImage();
-        else if (e.key === 'Escape') {
-          lightbox.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        }
+        else if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = 'auto'; }
       }
     });
+
+    // Load saat halaman dibuka
+    loadFromSheet();
   </script>
  </body>
 </html>
