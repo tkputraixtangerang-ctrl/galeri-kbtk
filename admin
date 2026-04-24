@@ -456,7 +456,7 @@ function doPost(e) {
 
 <script>
 // ====== CONFIG ======
-const ADMIN_PASSWORD = 'kbtk2025'; // Ganti password di sini
+const ADMIN_PASSWORD = 'tkputraIX90'; // Password sudah diubah
 let scriptUrl = localStorage.getItem('kbtk_script_url') || '';
 let allPhotos = [];
 let currentFilter = 'semua';
