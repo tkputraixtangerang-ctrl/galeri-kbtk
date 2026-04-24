@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel Galeri – KB-TK PUTRA IX</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Nunito', sans-serif; background: #FFF9F0; min-height: 100vh; }
+    .font-bubble { font-family: 'Bubblegum Sans', cursive; }
+    .card { background: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .btn-primary { background: #9333ea; color: white; border: none; border-radius: 12px; padding: 10px 20px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-primary:hover { background: #7e22ce; transform: translateY(-1px); }
+    .btn-danger { background: #ef4444; color: white; border: none; border-radius: 10px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-edit { background: #f59e0b; color: white; border: none; border-radius: 10px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .btn-edit:hover { background: #d97706; }
+    .btn-copy { background: #10b981; color: white; border: none; border-radius: 12px; padding: 10px 22px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+    .btn-copy:hover { background: #059669; transform: translateY(-1px); }
+    .btn-secondary { background: #e5e7eb; color: #374151; border: none; border-radius: 10px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .btn-secondary:hover { background: #d1d5db; }
+    input, select, textarea { font-family: 'Nunito', sans-serif; border: 2px solid #e5e7eb; border-radius: 10px; padding: 8px 12px; width: 100%; outline: none; transition: border-color 0.2s; font-size: 14px; }
+    input:focus, select:focus, textarea:focus { border-color: #9333ea; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .badge-aktivitas { background: #fce7f3; color: #be185d; }
+    .badge-fieldtrip { background: #d1fae5; color: #065f46; }
+    .badge-lomba { background: #ffedd5; color: #9a3412; }
+    .badge-keagamaan { background: #dbeafe; color: #1e40af; }
+    .photo-preview { width: 70px; height: 56px; object-fit: cover; border-radius: 10px; border: 2px solid #e5e7eb; }
+    .step-box { border-left: 4px solid #9333ea; background: #f5f3ff; border-radius: 0 12px 12px 0; padding: 12px 16px; margin-bottom: 10px; }
+    .step-num { background: #9333ea; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-right: 8px; flex-shrink: 0; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .modal-box { background: white; border-radius: 20px; padding: 28px; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .tab-btn { padding: 8px 20px; border-radius: 10px; border: none; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.2s; background: transparent; color: #6b7280; }
+    .tab-btn.active { background: #9333ea; color: white; }
+    .code-output { background: #1e1b4b; color: #a5b4fc; font-family: monospace; font-size: 12px; padding: 16px; border-radius: 12px; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; line-height: 1.6; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #10b981; color: white; padding: 12px 20px; border-radius: 12px; font-weight: 700; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    .alert-info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #1d4ed8; }
+    .alert-warning { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #92400e; }
+    .drag-area { border: 2px dashed #9333ea; border-radius: 12px; padding: 20px; text-align: center; background: #faf5ff; cursor: pointer; transition: background 0.2s; }
+    .drag-area:hover { background: #f3e8ff; }
+    .no-items { text-align: center; padding: 40px 20px; color: #9ca3af; }
+  </style>
+</head>
+<body>
+
+<!-- Toast Notifikasi -->
+<div id="toast" class="toast">✅ Berhasil!</div>
+
+<!-- Header -->
+<div style="background: linear-gradient(135deg, #9333ea, #7e22ce); padding: 24px 32px; color: white;">
+  <div class="font-bubble" style="font-size: 28px;">🖼️ Admin Panel Galeri</div>
+  <div style="font-size: 14px; opacity: 0.85; margin-top: 4px; font-weight: 600;">KB-TK PUTRA IX — Kelola Foto Kegiatan</div>
+</div>
+
+<!-- Panduan Cara Pakai -->
+<div style="max-width: 960px; margin: 0 auto; padding: 24px 20px;">
+
+  <!-- Panduan -->
+  <div class="card" style="padding: 20px; margin-bottom: 24px;">
+    <div class="font-bubble" style="font-size: 20px; color: #9333ea; margin-bottom: 14px;">📖 Cara Menambah Foto Kegiatan</div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="step-box">
+        <div style="display: flex; align-items: center;">
+          <span class="step-num">1</span>
+          <span style="font-weight: 700; color: #4c1d95;">Upload foto ke Google Drive Sekolah</span>
+        </div>
+        <div style="margin-top: 6px; margin-left: 32px; color: #6b7280; font-size: 13px;">Buka Google Drive → folder "Galeri KB-TK Putra IX" → klik "+ Baru" → "Upload file"</div>
+      </div>
+      <div class="step-box">
+        <div style="display: flex; align-items: center;">
+          <span class="step-num">2</span>
+          <span style="font-weight: 700; color: #4c1d95;">Klik kanan foto → "Bagikan" → Atur ke "Siapapun yang memiliki tautan"</span>
+        </div>
+        <div style="margin-top: 6px; margin-left: 32px; color: #6b7280; font-size: 13px;">Ini agar foto bisa tampil di website. Lalu klik "Salin tautan".</div>
+      </div>
+      <div class="step-box">
+        <div style="display: flex; align-items: center;">
+          <span class="step-num">3</span>
+          <span style="font-weight: 700; color: #4c1d95;">Paste link di kolom "Link Google Drive" di bawah</span>
+        </div>
+        <div style="margin-top: 6px; margin-left: 32px; color: #6b7280; font-size: 13px;">Panel ini akan otomatis ambil ID fotonya. Isi juga judul & kategori kegiatan.</div>
+      </div>
+      <div class="step-box">
+        <div style="display: flex; align-items: center;">
+          <span class="step-num">4</span>
+          <span style="font-weight: 700; color: #4c1d95;">Klik "Generate Kode" lalu salin kode HTML-nya</span>
+        </div>
+        <div style="margin-top: 6px; margin-left: 32px; color: #6b7280; font-size: 13px;">Kode ini dikirimkan ke pengelola website untuk ditambahkan ke halaman galeri.</div>
+      </div>
+    </div>
+    <div class="alert-warning" style="margin-top: 14px;">
+      ⚠️ <strong>Catatan penting:</strong> Panel admin ini membantu membuat kode HTML siap pakai. Kode tersebut perlu di-paste ke file website oleh pengelola teknis (atau dikirim via WhatsApp/email).
+    </div>
+  </div>
+
+  <!-- Tab navigasi -->
+  <div style="display: flex; gap: 8px; margin-bottom: 20px; background: white; padding: 8px; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+    <button class="tab-btn active" onclick="switchTab('tambah')">➕ Tambah Foto</button>
+    <button class="tab-btn" onclick="switchTab('kelola')">📋 Kelola Daftar</button>
+    <button class="tab-btn" onclick="switchTab('generate')">⚙️ Generate Kode</button>
+    <button class="tab-btn" onclick="switchTab('panduan')">📺 Panduan Video</button>
+  </div>
+
+  <!-- TAB 1: Tambah Foto -->
+  <div id="tab-tambah">
+    <div class="card" style="padding: 24px;">
+      <div class="font-bubble" style="font-size: 18px; color: #9333ea; margin-bottom: 18px;">➕ Tambah Foto Kegiatan Baru</div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="grid-column: 1 / -1;">
+          <label style="font-weight: 700; font-size: 13px; color: #374151; display: block; margin-bottom: 6px;">🔗 Link Google Drive Foto <span style="color: red;">*</span></label>
+          <input type="text" id="input-link" placeholder="Paste link Google Drive di sini..." oninput="parseGDriveLink()" style="font-size: 14px;">
+          <div id="link-status" style="margin-top: 6px; font-size: 13px; color: #6b7280;"></div>
+        </div>
+
+        <div>
+          <label style="font-weight: 700; font-size: 13px; color: #374151; display: block; margin-bottom: 6px;">🏷️ Judul Kegiatan <span style="color: red;">*</span></label>
+          <input type="text" id="input-judul" placeholder="Contoh: Lomba Mewarnai 2025" maxlength="60">
+        </div>
+
+        <div>
+          <label style="font-weight: 700; font-size: 13px; color: #374151; display: block; margin-bottom: 6px;">📝 Deskripsi Singkat</label>
+          <input type="text" id="input-desc" placeholder="Contoh: Kreativitas anak-anak bersemi!" maxlength="60">
+        </div>
+
+        <div>
+          <label style="font-weight: 700; font-size: 13px; color: #374151; display: block; margin-bottom: 6px;">📂 Kategori <span style="color: red;">*</span></label>
+          <select id="input-kategori">
+            <option value="">-- Pilih Kategori --</option>
+            <option value="aktivitas">Aktivitas</option>
+            <option value="fieldtrip">Field Trip</option>
+            <option value="lomba">Lomba</option>
+            <option value="keagamaan">Keagamaan</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-weight: 700; font-size: 13px; color: #374151; display: block; margin-bottom: 6px;">🎨 Warna Border Kartu</label>
+          <select id="input-warna">
+            <option value="yellow-300">Kuning</option>
+            <option value="green-300">Hijau</option>
+            <option value="blue-300">Biru</option>
+            <option value="pink-300">Pink</option>
+            <option value="red-300">Merah</option>
+            <option value="purple-300">Ungu</option>
+            <option value="orange-300">Oranye</option>
+            <option value="teal-300">Tosca</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div id="preview-area" style="display: none; margin-top: 20px; padding: 16px; background: #f9fafb; border-radius: 14px; border: 2px dashed #d1d5db;">
+        <div style="font-weight: 700; font-size: 13px; color: #374151; margin-bottom: 10px;">👁️ Preview Foto:</div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img id="preview-img" src="" alt="" style="width: 100px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid #e5e7eb;">
+          <div>
+            <div id="preview-judul" style="font-weight: 700; color: #4c1d95; font-size: 15px;"></div>
+            <div id="preview-desc" style="color: #6b7280; font-size: 13px; margin-top: 2px;"></div>
+            <div id="preview-kategori" style="margin-top: 6px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 20px;">
+        <button class="btn-primary" onclick="tambahFoto()" style="font-size: 15px; padding: 12px 28px;">➕ Tambah ke Daftar</button>
+        <button class="btn-secondary" onclick="resetForm()" style="font-size: 14px; padding: 12px 20px;">🔄 Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Kelola Daftar -->
+  <div id="tab-kelola" style="display: none;">
+    <div class="card" style="padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+        <div class="font-bubble" style="font-size: 18px; color: #9333ea;">📋 Daftar Foto Galeri</div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <select id="filter-kategori" onchange="renderDaftar()" style="width: auto; padding: 6px 12px; font-size: 13px;">
+            <option value="">Semua Kategori</option>
+            <option value="aktivitas">Aktivitas</option>
+            <option value="fieldtrip">Field Trip</option>
+            <option value="lomba">Lomba</option>
+            <option value="keagamaan">Keagamaan</option>
+          </select>
+          <span id="jumlah-foto" style="font-size: 13px; color: #6b7280; font-weight: 600;"></span>
+        </div>
+      </div>
+
+      <div id="daftar-foto"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Generate Kode -->
+  <div id="tab-generate" style="display: none;">
+    <div class="card" style="padding: 24px;">
+      <div class="font-bubble" style="font-size: 18px; color: #9333ea; margin-bottom: 6px;">⚙️ Generate Kode HTML</div>
+      <p style="color: #6b7280; font-size: 14px; margin-bottom: 18px;">Kode ini siap di-paste ke dalam file galeri website KB-TK Putra IX.</p>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+        <button class="btn-primary" onclick="generateKode()" style="font-size: 14px;">⚡ Generate Semua Foto</button>
+        <button class="btn-secondary" onclick="generateKodeHanyaBaru()" style="font-size: 14px;">✨ Hanya Foto Baru (Tambahan)</button>
+      </div>
+
+      <div id="output-kode" style="display: none;">
+        <div class="alert-info" style="margin-bottom: 14px;">
+          💡 <strong>Cara pakai:</strong> Salin semua kode di bawah, lalu kirim ke pengelola website. Mereka akan paste di dalam <code>&lt;div id="gallery-grid"&gt;</code> pada file galeri.html.
+        </div>
+        <div class="code-output" id="kode-result"></div>
+        <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn-copy" onclick="salinKode()">📋 Salin Kode</button>
+          <button class="btn-secondary" onclick="downloadKode()" style="font-size: 14px; padding: 10px 18px;">💾 Download .txt</button>
+        </div>
+      </div>
+
+      <div id="no-generate" class="no-items">
+        <div style="font-size: 40px; margin-bottom: 10px;">📷</div>
+        <div style="font-weight: 700;">Belum ada foto untuk di-generate</div>
+        <div style="font-size: 13px; margin-top: 4px;">Tambah foto dulu di tab "Tambah Foto"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: Panduan Video -->
+  <div id="tab-panduan" style="display: none;">
+    <div class="card" style="padding: 24px;">
+      <div class="font-bubble" style="font-size: 18px; color: #9333ea; margin-bottom: 18px;">📺 Panduan Penggunaan untuk Guru</div>
+
+      <div style="display: grid; gap: 14px;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 18px;">
+          <div style="font-weight: 800; color: #065f46; font-size: 15px; margin-bottom: 10px;">📌 Cara Upload Foto Baru ke Website</div>
+          <ol style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px; line-height: 1.8;">
+            <li>Buka Google Drive sekolah, masuk ke folder <strong>"Galeri KB-TK Putra IX"</strong></li>
+            <li>Klik <strong>"+ Baru"</strong> → <strong>"Upload file"</strong> → pilih foto dari HP/laptop</li>
+            <li>Tunggu sampai upload selesai, lalu <strong>klik kanan</strong> foto tersebut</li>
+            <li>Pilih <strong>"Bagikan"</strong> → ubah ke <strong>"Siapapun yang memiliki tautan"</strong> → klik <strong>"Salin tautan"</strong></li>
+            <li>Buka file Admin Panel ini, masuk tab <strong>"Tambah Foto"</strong></li>
+            <li>Paste link di kolom pertama → isi judul, deskripsi, kategori → klik <strong>"Tambah ke Daftar"</strong></li>
+            <li>Masuk tab <strong>"Generate Kode"</strong> → klik <strong>"Generate Hanya Foto Baru"</strong> → salin kode</li>
+            <li>Kirim kode via WhatsApp ke pengelola website</li>
+          </ol>
+        </div>
+
+        <div style="background: #fff7ed; border: 1px solid #fed7aa; border-radius: 14px; padding: 18px;">
+          <div style="font-weight: 800; color: #9a3412; font-size: 15px; margin-bottom: 10px;">✏️ Cara Edit Judul/Deskripsi Foto</div>
+          <ol style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px; line-height: 1.8;">
+            <li>Masuk ke tab <strong>"Kelola Daftar"</strong></li>
+            <li>Cari foto yang ingin diedit</li>
+            <li>Klik tombol <strong>"✏️ Edit"</strong> (kuning)</li>
+            <li>Ubah judul atau deskripsi → klik <strong>"Simpan"</strong></li>
+            <li>Setelah edit, pergi ke tab <strong>"Generate Kode"</strong> → generate ulang → kirim ke pengelola</li>
+          </ol>
+        </div>
+
+        <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 14px; padding: 18px;">
+          <div style="font-weight: 800; color: #991b1b; font-size: 15px; margin-bottom: 10px;">🗑️ Cara Hapus Foto dari Galeri</div>
+          <ol style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px; line-height: 1.8;">
+            <li>Masuk ke tab <strong>"Kelola Daftar"</strong></li>
+            <li>Cari foto yang ingin dihapus</li>
+            <li>Klik tombol <strong>"🗑️ Hapus"</strong> (merah) → konfirmasi</li>
+            <li>Lanjut ke tab <strong>"Generate Kode"</strong> → generate ulang semua → kirim ke pengelola</li>
+          </ol>
+        </div>
+
+        <div style="background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 14px; padding: 18px;">
+          <div style="font-weight: 800; color: #4c1d95; font-size: 15px; margin-bottom: 8px;">⚠️ Hal Penting yang Perlu Diingat</div>
+          <ul style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px; line-height: 1.8;">
+            <li>Data di panel ini tersimpan di browser. Jangan hapus cache atau gunakan browser berbeda.</li>
+            <li>Selalu backup data dengan klik <strong>"Generate Kode"</strong> dan simpan kodenya.</li>
+            <li>Foto di Google Drive harus diatur <strong>"Siapapun yang punya link"</strong> agar tampil di website.</li>
+            <li>Ukuran foto ideal: <strong>800x600px ke atas</strong>, format JPG atau PNG.</li>
+            <li>Setelah generate kode, kirim ke pengelola website dalam <strong>24 jam</strong> agar tidak lupa.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal Edit -->
+<div id="modal-edit" class="modal-overlay" style="display: none;" onclick="if(event.target===this)tutupModal()">
+  <div class="modal-box">
+    <div class="font-bubble" style="font-size: 20px; color: #9333ea; margin-bottom: 16px;">✏️ Edit Foto</div>
+    <input type="hidden" id="edit-index">
+    <div style="margin-bottom: 12px;">
+      <label style="font-weight: 700; font-size: 13px; display: block; margin-bottom: 6px;">Judul Kegiatan</label>
+      <input type="text" id="edit-judul">
+    </div>
+    <div style="margin-bottom: 12px;">
+      <label style="font-weight: 700; font-size: 13px; display: block; margin-bottom: 6px;">Deskripsi</label>
+      <input type="text" id="edit-desc">
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="font-weight: 700; font-size: 13px; display: block; margin-bottom: 6px;">Kategori</label>
+      <select id="edit-kategori">
+        <option value="aktivitas">Aktivitas</option>
+        <option value="fieldtrip">Field Trip</option>
+        <option value="lomba">Lomba</option>
+        <option value="keagamaan">Keagamaan</option>
+      </select>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-primary" onclick="simpanEdit()">💾 Simpan Perubahan</button>
+      <button class="btn-secondary" onclick="tutupModal()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Data foto — berisi data default dari galeri yang sudah ada
+let fotoData = JSON.parse(localStorage.getItem('galeri-kbtk') || 'null') || [
+  { id: '1P791jCPYVSLiEiCXP2Fn8H7_mKHLV8i-', judul: 'Bermain Lego', desc: 'Kreativitas tanpa batas', kategori: 'aktivitas', warna: 'yellow-300', isNew: false },
+  { id: '18hhf-CO8hmR4EKbyP7AKSfFwyZxhv13q', judul: 'Fieldtrip Enchanting Valley by Taman Safari', desc: 'Petualangan seru di alam', kategori: 'fieldtrip', warna: 'green-300', isNew: false },
+  { id: '1Kx_GPlGiYWMDAt4zyMKKHZCuWPsPuUKm', judul: 'Fieldtrip TK A dan TK B', desc: 'Petualangan seru bersama', kategori: 'fieldtrip', warna: 'blue-300', isNew: false },
+  { id: '1bR8Nxl9MMBk1QPh5nPFcDiCDIyQtPy5Z', judul: 'Kunjungan Satlantas Polres', desc: 'Donasi mainan mobil-mobilan', kategori: 'aktivitas', warna: 'red-300', isNew: false },
+  { id: '1xaL-kVlHJCx1o93d3r60NZnoZV-Y_1ft', judul: 'Pesantren Ramadhan', desc: 'Belajar agama bersama', kategori: 'keagamaan', warna: 'emerald-300', isNew: false },
+  { id: '1g80ZT3iJAV4lp_tWjwthxmKrPJPWx3lW', judul: 'Upacara Senin Pagi', desc: 'Semangat nasionalisme', kategori: 'aktivitas', warna: 'indigo-300', isNew: false },
+  { id: '1O8chzuqIGjRWNTtSPeASIHmMMn7en0dU', judul: 'Lomba Menari Porseni', desc: 'Tingkat Kab. Tangerang di Ancol', kategori: 'lomba', warna: 'pink-300', isNew: false },
+  { id: '1lKSKuKzwLMeZO7s-OlVvQmE3gV6A_oe1', judul: 'Lomba Mewarnai', desc: 'Warna-warni kreativitas', kategori: 'lomba', warna: 'amber-300', isNew: false },
+  { id: '18eoXQz8wK2SIAVEfXMb3dAeqM7_pJdRV', judul: 'Lomba Busana Daerah', desc: 'Keindahan budaya Indonesia', kategori: 'lomba', warna: 'rose-300', isNew: false },
+  { id: '1LdBLuX_LZy5H8PkYc-WNzOgX5A52GZGK', judul: 'Manasik Haji', desc: 'Belajar ibadah haji', kategori: 'keagamaan', warna: 'teal-300', isNew: false },
+  { id: '1d1KEVJdeSIQVYDo7xOwGxT-n1UCbcVxt', judul: 'Membuat Gedung/Konstruksi', desc: 'Materi Ke-PU an', kategori: 'aktivitas', warna: 'cyan-300', isNew: false },
+  { id: '1bkllU_ADOF1oksbOK3B-fdfP5s4T2MHn', judul: 'Membuat Maket "Kota"', desc: 'Materi Ke-PU an', kategori: 'aktivitas', warna: 'violet-300', isNew: false },
+  { id: '15hFrIpmio5Uw0iHjsyclhD7BudmL5ygc', judul: 'Outingclass TK B - Batalyon Kaveleri', desc: 'Ke Batalyon Kaveleri', kategori: 'fieldtrip', warna: 'lime-300', isNew: false },
+  { id: '1uvdZlneb6Y2HUbAwzpcglqKhBkV8V3qz', judul: 'Bermain Sepeda KB', desc: 'Gowes seru bersama!', kategori: 'aktivitas', warna: 'orange-300', isNew: false },
+  { id: '1_qK1A-fr0Cc9VCdUgU5rRx-7hRaEeSw9', judul: 'Senam Pagi', desc: 'Sehat dan bugar selalu!', kategori: 'aktivitas', warna: 'sky-300', isNew: false }
+];
+
+const warnaConfig = {
+  'yellow-300': { border: 'border-yellow-300', grad: 'from-yellow-100 to-orange-100', text: 'text-yellow-600', overlay: 'from-yellow-600/80' },
+  'green-300': { border: 'border-green-300', grad: 'from-green-100 to-teal-100', text: 'text-green-600', overlay: 'from-green-600/80' },
+  'blue-300': { border: 'border-blue-300', grad: 'from-blue-100 to-purple-100', text: 'text-blue-600', overlay: 'from-blue-600/80' },
+  'red-300': { border: 'border-red-300', grad: 'from-red-100 to-orange-100', text: 'text-red-500', overlay: 'from-red-600/80' },
+  'emerald-300': { border: 'border-emerald-300', grad: 'from-emerald-100 to-green-100', text: 'text-emerald-600', overlay: 'from-emerald-600/80' },
+  'indigo-300': { border: 'border-indigo-300', grad: 'from-indigo-100 to-blue-100', text: 'text-indigo-600', overlay: 'from-indigo-600/80' },
+  'pink-300': { border: 'border-pink-300', grad: 'from-pink-100 to-purple-100', text: 'text-pink-600', overlay: 'from-pink-600/80' },
+  'amber-300': { border: 'border-amber-300', grad: 'from-amber-100 to-yellow-100', text: 'text-amber-600', overlay: 'from-amber-600/80' },
+  'rose-300': { border: 'border-rose-300', grad: 'from-rose-100 to-pink-100', text: 'text-rose-600', overlay: 'from-rose-600/80' },
+  'teal-300': { border: 'border-teal-300', grad: 'from-teal-100 to-cyan-100', text: 'text-teal-600', overlay: 'from-teal-600/80' },
+  'cyan-300': { border: 'border-cyan-300', grad: 'from-cyan-100 to-blue-100', text: 'text-cyan-600', overlay: 'from-cyan-600/80' },
+  'violet-300': { border: 'border-violet-300', grad: 'from-violet-100 to-purple-100', text: 'text-violet-600', overlay: 'from-violet-600/80' },
+  'lime-300': { border: 'border-lime-300', grad: 'from-lime-100 to-green-100', text: 'text-lime-600', overlay: 'from-lime-600/80' },
+  'orange-300': { border: 'border-orange-300', grad: 'from-orange-100 to-amber-100', text: 'text-orange-600', overlay: 'from-orange-600/80' },
+  'sky-300': { border: 'border-sky-300', grad: 'from-sky-100 to-blue-100', text: 'text-sky-600', overlay: 'from-sky-600/80' },
+  'purple-300': { border: 'border-purple-300', grad: 'from-purple-100 to-pink-100', text: 'text-purple-600', overlay: 'from-purple-600/80' },
+};
+
+function simpanData() {
+  localStorage.setItem('galeri-kbtk', JSON.stringify(fotoData));
+}
+
+function parseGDriveLink() {
+  const link = document.getElementById('input-link').value.trim();
+  const status = document.getElementById('link-status');
+  if (!link) { status.textContent = ''; return; }
+  const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (match) {
+    const id = match[1];
+    status.innerHTML = `<span style="color: #10b981; font-weight: 700;">✅ ID ditemukan: ${id}</span>`;
+    updatePreview(id);
+  } else if (link.includes('id=')) {
+    const id = new URL(link).searchParams.get('id');
+    if (id) {
+      status.innerHTML = `<span style="color: #10b981; font-weight: 700;">✅ ID ditemukan: ${id}</span>`;
+      updatePreview(id);
+    }
+  } else {
+    status.innerHTML = `<span style="color: #ef4444; font-weight: 700;">❌ Format link tidak dikenali. Pastikan link dari Google Drive.</span>`;
+    document.getElementById('preview-area').style.display = 'none';
+  }
+}
+
+function updatePreview(id) {
+  const judul = document.getElementById('input-judul').value || '(Judul belum diisi)';
+  const desc = document.getElementById('input-desc').value || '';
+  const kategori = document.getElementById('input-kategori').value;
+  document.getElementById('preview-img').src = `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
+  document.getElementById('preview-judul').textContent = judul;
+  document.getElementById('preview-desc').textContent = desc;
+  const kat = document.getElementById('preview-kategori');
+  kat.innerHTML = kategori ? `<span class="badge badge-${kategori}">${kategori.charAt(0).toUpperCase()+kategori.slice(1)}</span>` : '';
+  document.getElementById('preview-area').style.display = 'block';
+}
+
+function getIdFromLink(link) {
+  const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (match) return match[1];
+  try {
+    const url = new URL(link);
+    return url.searchParams.get('id');
+  } catch { return null; }
+}
+
+function tambahFoto() {
+  const link = document.getElementById('input-link').value.trim();
+  const judul = document.getElementById('input-judul').value.trim();
+  const desc = document.getElementById('input-desc').value.trim();
+  const kategori = document.getElementById('input-kategori').value;
+  const warna = document.getElementById('input-warna').value;
+
+  if (!link || !judul || !kategori) {
+    tampilToast('❗ Link, Judul, dan Kategori wajib diisi!', '#ef4444');
+    return;
+  }
+
+  const id = getIdFromLink(link);
+  if (!id) {
+    tampilToast('❗ Link Google Drive tidak valid!', '#ef4444');
+    return;
+  }
+
+  fotoData.push({ id, judul, desc, kategori, warna, isNew: true });
+  simpanData();
+  tampilToast('✅ Foto berhasil ditambahkan!');
+  resetForm();
+  renderDaftar();
+}
+
+function resetForm() {
+  document.getElementById('input-link').value = '';
+  document.getElementById('input-judul').value = '';
+  document.getElementById('input-desc').value = '';
+  document.getElementById('input-kategori').value = '';
+  document.getElementById('input-warna').value = 'yellow-300';
+  document.getElementById('link-status').textContent = '';
+  document.getElementById('preview-area').style.display = 'none';
+}
+
+function hapusFoto(i) {
+  if (confirm(`Hapus foto "${fotoData[i].judul}"? Tindakan ini tidak bisa dibatalkan.`)) {
+    fotoData.splice(i, 1);
+    simpanData();
+    renderDaftar();
+    tampilToast('🗑️ Foto dihapus.', '#f59e0b');
+  }
+}
+
+function bukaModal(i) {
+  const f = fotoData[i];
+  document.getElementById('edit-index').value = i;
+  document.getElementById('edit-judul').value = f.judul;
+  document.getElementById('edit-desc').value = f.desc;
+  document.getElementById('edit-kategori').value = f.kategori;
+  document.getElementById('modal-edit').style.display = 'flex';
+}
+
+function tutupModal() {
+  document.getElementById('modal-edit').style.display = 'none';
+}
+
+function simpanEdit() {
+  const i = parseInt(document.getElementById('edit-index').value);
+  fotoData[i].judul = document.getElementById('edit-judul').value.trim();
+  fotoData[i].desc = document.getElementById('edit-desc').value.trim();
+  fotoData[i].kategori = document.getElementById('edit-kategori').value;
+  simpanData();
+  tutupModal();
+  renderDaftar();
+  tampilToast('✅ Perubahan disimpan!');
+}
+
+function renderDaftar() {
+  const filter = document.getElementById('filter-kategori').value;
+  const container = document.getElementById('daftar-foto');
+  const filtered = fotoData.filter(f => !filter || f.kategori === filter);
+
+  document.getElementById('jumlah-foto').textContent = `${filtered.length} foto`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="no-items"><div style="font-size: 40px;">📷</div><div style="font-weight: 700; margin-top: 10px;">Belum ada foto</div></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map((f, visIdx) => {
+    const realIdx = fotoData.indexOf(f);
+    return `
+      <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid #f3f4f6; border-radius: 12px; ${f.isNew ? 'background: #f0fdf4;' : ''}">
+        <img src="https://drive.google.com/thumbnail?id=${f.id}&sz=w200" alt="${f.judul}" class="photo-preview" onerror="this.style.background='#e5e7eb';this.src='';">
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-weight: 700; font-size: 14px; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${f.judul} ${f.isNew ? '<span style="background:#dcfce7;color:#166534;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700;margin-left:4px;">BARU</span>' : ''}</div>
+          <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">${f.desc || '-'}</div>
+          <span class="badge badge-${f.kategori}" style="margin-top: 4px;">${f.kategori}</span>
+        </div>
+        <div style="display: flex; gap: 6px; flex-shrink: 0;">
+          <button class="btn-edit" onclick="bukaModal(${realIdx})">✏️</button>
+          <button class="btn-danger" onclick="hapusFoto(${realIdx})">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function generateKartuHTML(f, index) {
+  const warna = f.warna || 'yellow-300';
+  const cfg = warnaConfig[warna] || warnaConfig['yellow-300'];
+  return `
+      <div class="gallery-item cursor-pointer" data-category="${f.kategori}" onclick="openLightbox(${index})">
+       <div class="bg-white rounded-3xl overflow-hidden card-shadow cute-border ${cfg.border}">
+        <div class="relative overflow-hidden aspect-[4/3]"><img src="https://drive.google.com/thumbnail?id=${f.id}&sz=w800" alt="${f.judul}" class="gallery-image w-full h-full object-cover" loading="lazy">
+         <div class="gallery-overlay absolute inset-0 bg-gradient-to-t ${cfg.overlay} to-transparent flex items-end p-4"><span class="text-white font-bold text-lg">${f.judul.toUpperCase()}</span></div>
+        </div>
+        <div class="p-4 bg-gradient-to-r ${cfg.grad}">
+         <h3 class="font-bubble text-lg ${cfg.text}">${f.judul}</h3>
+         <p class="text-sm text-gray-600">${f.desc}</p>
+        </div>
+       </div>
+      </div>`;
+}
+
+function generateKode() {
+  if (fotoData.length === 0) return;
+  const kode = fotoData.map((f, i) => generateKartuHTML(f, i)).join('\n');
+  const galleryDataJS = `const galleryData = [\n${fotoData.map(f => `  { id: '${f.id}', title: '${f.judul.replace(/'/g,"\\'")}' }`).join(',\n')}\n];`;
+  const output = `<!-- ===== DAFTAR FOTO GALERI ===== -->\n<!-- Total: ${fotoData.length} foto -->\n<!-- Di-generate: ${new Date().toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'})} -->\n\n${kode}\n\n<!-- ===== GALLERY DATA untuk Lightbox ===== -->\n<script>\n${galleryDataJS}\n<\/script>`;
+  document.getElementById('kode-result').textContent = output;
+  document.getElementById('output-kode').style.display = 'block';
+  document.getElementById('no-generate').style.display = 'none';
+}
+
+function generateKodeHanyaBaru() {
+  const baru = fotoData.filter(f => f.isNew);
+  if (baru.length === 0) {
+    tampilToast('ℹ️ Tidak ada foto baru yang ditambahkan.', '#6b7280');
+    return;
+  }
+  const startIndex = fotoData.filter(f => !f.isNew).length;
+  const kode = baru.map((f, i) => generateKartuHTML(f, startIndex + i)).join('\n');
+  const output = `<!-- ===== FOTO BARU (paste SEBELUM tag </div> penutup gallery-grid) ===== -->\n<!-- Jumlah foto baru: ${baru.length} -->\n<!-- Di-generate: ${new Date().toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'})} -->\n\n${kode}`;
+  document.getElementById('kode-result').textContent = output;
+  document.getElementById('output-kode').style.display = 'block';
+  document.getElementById('no-generate').style.display = 'none';
+}
+
+function salinKode() {
+  const teks = document.getElementById('kode-result').textContent;
+  navigator.clipboard.writeText(teks).then(() => tampilToast('📋 Kode berhasil disalin!'));
+}
+
+function downloadKode() {
+  const teks = document.getElementById('kode-result').textContent;
+  const blob = new Blob([teks], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `kode-galeri-kbtk-${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+  tampilToast('💾 File berhasil diunduh!');
+}
+
+function tampilToast(pesan, warna = '#10b981') {
+  const t = document.getElementById('toast');
+  t.textContent = pesan;
+  t.style.background = warna;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function switchTab(tab) {
+  ['tambah','kelola','generate','panduan'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', ['tambah','kelola','generate','panduan'][i] === tab);
+  });
+  if (tab === 'kelola') renderDaftar();
+  if (tab === 'generate') {
+    if (fotoData.length > 0) {
+      document.getElementById('no-generate').style.display = 'none';
+    } else {
+      document.getElementById('no-generate').style.display = 'block';
+      document.getElementById('output-kode').style.display = 'none';
+    }
+  }
+}
+
+document.getElementById('input-judul').addEventListener('input', () => {
+  const id = getIdFromLink(document.getElementById('input-link').value);
+  if (id) updatePreview(id);
+});
+document.getElementById('input-desc').addEventListener('input', () => {
+  const id = getIdFromLink(document.getElementById('input-link').value);
+  if (id) updatePreview(id);
+});
+document.getElementById('input-kategori').addEventListener('change', () => {
+  const id = getIdFromLink(document.getElementById('input-link').value);
+  if (id) updatePreview(id);
+});
+</script>
+</body>
+</html>
