@@ -351,8 +351,7 @@
       document.getElementById('loading-indicator').style.display = 'block';
       document.getElementById('gallery-grid').innerHTML = '';
       try {
-        const resp = await fetch(APPS_SCRIPT_URL + 'https://script.google.com/macros/s/AKfycbzhblsJ-N7V9gqntHjgmD9ED31dtulchTC-_AlFkN4pI-7Aj-lbJE6mgNvrhkpSAKhWmA/exec' + Date.now());
-        const sheetPhotos = await resp.json();
+       const resp = await fetch(APPS_SCRIPT_URL + '?t=' + Date.now());
         // Gabungkan: foto lama + foto baru dari Sheet (hindari duplikat by id)
         const sheetIds = sheetPhotos.map(p => p.id);
         const staticOnly = STATIC_PHOTOS.filter(p => !sheetIds.includes(p.id));
