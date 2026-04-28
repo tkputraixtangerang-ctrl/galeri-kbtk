@@ -58,7 +58,7 @@
   }
 
   /* NAV ARROWS */
-  .nav-btn {
+.nav-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -70,9 +70,21 @@
     font-size: 1.2rem;
     cursor: pointer;
     backdrop-filter: blur(6px);
-    transition: background 0.2s;
+    transition: background 0.2s, opacity 0.3s;
     display: flex; align-items: center; justify-content: center;
     z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.35); }
+  .nav-prev { left: 16px; }
+  .nav-next { right: 16px; }
+  .slider-wrap:hover .nav-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (max-width: 768px) {
+    .nav-btn { display: none; }
   }
   .nav-btn:hover { background: rgba(255,255,255,0.35); }
   .nav-prev { left: 16px; }
