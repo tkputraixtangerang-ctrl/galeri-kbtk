@@ -941,7 +941,6 @@ async function tambahBanner() {
 
   if (!link) { showAlert('error', '❌ Link Google Drive banner belum diisi!'); return; }
   if (!id) { showAlert('error', '❌ Link Google Drive tidak valid.'); return; }
-  if (!judul) { showAlert('error', '❌ Judul banner belum diisi!'); return; }
 
   const btn = document.getElementById('btn-banner');
   btn.disabled = true; btn.textContent = '⏳ Menyimpan...';
