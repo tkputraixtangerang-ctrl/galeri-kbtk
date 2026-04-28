@@ -4,451 +4,272 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hero Banner - KB-TK Putra IX</title>
-<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #000; overflow: hidden; font-family: 'Nunito', sans-serif; }
 
-  html, body {
-    width: 100%; height: 100%;
-    overflow: hidden;
-    background: #1a0a2e;
-    font-family: 'Nunito', sans-serif;
-  }
-
-  /* ── SLIDER WRAPPER ── */
-  .slider {
+  .slider-wrap {
     position: relative;
-    width: 100%; height: 100vh;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
   }
 
-  /* ── SLIDES ── */
   .slide {
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     opacity: 0;
-    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
+    transition: opacity 0.8s ease;
+    background: #1a1a2e;
   }
-  .slide.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .slide.active { opacity: 1; }
 
-  .slide-img {
-    width: 100%; height: 100%;
+  .slide img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transform: scale(1.06);
-    transition: transform 6s ease-out;
     display: block;
   }
-  .slide.active .slide-img {
-    transform: scale(1);
-  }
 
-  /* ── OVERLAY GRADIENT ── */
   .slide-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(20, 5, 50, 0.55) 0%,
-      rgba(80, 20, 120, 0.25) 50%,
-      rgba(255, 180, 50, 0.12) 100%
-    );
-  }
-
-  /* ── DECORATIVE SHAPES ── */
-  .slide-deco {
-    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-  }
-  .deco-circle {
     position: absolute;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.08);
-    animation: float 8s ease-in-out infinite;
-  }
-  .deco-circle:nth-child(1) { width: 300px; height: 300px; top: -80px; right: -60px; animation-delay: 0s; }
-  .deco-circle:nth-child(2) { width: 180px; height: 180px; bottom: 40px; left: -40px; animation-delay: -3s; }
-  .deco-circle:nth-child(3) { width: 120px; height: 120px; top: 30%; right: 15%; animation-delay: -5s; border-color: rgba(255,220,80,0.15); }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-18px) rotate(5deg); }
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
   }
 
-  /* ── CAPTION ── */
-  .slide-caption {
+  .slide-text {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 60px 52px 48px;
-    background: linear-gradient(to top, rgba(15,5,40,0.85) 0%, transparent 100%);
-    transform: translateY(16px);
-    opacity: 0;
-    transition: transform 0.7s 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.7s 0.3s ease;
+    bottom: 60px;
+    left: 48px;
+    right: 48px;
+    color: #fff;
   }
-  .slide.active .slide-caption {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .caption-tag {
-    display: inline-block;
-    background: rgba(255, 210, 60, 0.92);
-    color: #1a0a2e;
-    font-size: 0.7rem;
+  .slide-title {
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
     font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 4px 14px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-  }
-
-  .caption-title {
-    font-family: 'Bubblegum Sans', cursive;
-    font-size: clamp(1.6rem, 4vw, 2.8rem);
-    color: #ffffff;
     line-height: 1.2;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+  .slide-sub {
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    opacity: 0.9;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
   }
 
-  .caption-sub {
-    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
-    color: rgba(255,255,255,0.82);
-    font-weight: 600;
-    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
-    max-width: 520px;
-  }
-
-  /* ── NAV ARROWS ── */
+  /* NAV ARROWS */
   .nav-btn {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 48px; height: 48px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255,255,255,0.25);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: #fff;
+    width: 44px; height: 44px;
     border-radius: 50%;
-    color: white;
     font-size: 1.2rem;
     cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s;
     display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, transform 0.2s;
-    z-index: 20;
-    user-select: none;
+    z-index: 10;
   }
-  .nav-btn:hover {
-    background: rgba(255,255,255,0.28);
-    transform: translateY(-50%) scale(1.08);
-  }
-  .nav-prev { left: 18px; }
-  .nav-next { right: 18px; }
+  .nav-btn:hover { background: rgba(255,255,255,0.35); }
+  .nav-prev { left: 16px; }
+  .nav-next { right: 16px; }
 
-  /* ── DOTS ── */
+  /* DOTS */
   .dots {
-    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; z-index: 20;
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
   }
   .dot {
-    width: 8px; height: 8px; border-radius: 20px;
-    background: rgba(255,255,255,0.35);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
     cursor: pointer;
-    transition: all 0.35s ease;
-    border: none;
+    transition: all 0.3s;
   }
   .dot.active {
-    background: #FFD23F;
-    width: 26px;
+    background: #fff;
+    width: 24px;
+    border-radius: 4px;
   }
 
-  /* ── PROGRESS BAR ── */
+  /* PROGRESS BAR */
   .progress-bar {
-    position: absolute; bottom: 0; left: 0;
+    position: absolute;
+    bottom: 0; left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #FFD23F, #FF8C00);
+    background: #FFD700;
     width: 0%;
-    z-index: 20;
     transition: width linear;
-    border-radius: 0 2px 2px 0;
+    z-index: 10;
   }
 
-  /* ── LOADING STATE ── */
-  .loading-state {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a0a2e, #2d1060);
-    z-index: 50;
-    gap: 16px;
-    transition: opacity 0.5s;
-  }
-  .loading-state.hidden { opacity: 0; pointer-events: none; }
-
-  .loading-logo {
-    font-family: 'Bubblegum Sans', cursive;
-    font-size: 1.8rem; color: #FFD23F;
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-
-  .loading-dots { display: flex; gap: 6px; }
-  .loading-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.3);
-    animation: bounce 1.2s ease-in-out infinite;
-  }
-  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce { 0%,100%{transform:translateY(0);background:rgba(255,255,255,0.3)} 50%{transform:translateY(-8px);background:#FFD23F} }
-
-  /* ── ERROR STATE ── */
-  .error-state {
-    position: absolute; inset: 0;
-    display: none; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a0a2e, #2d1060);
-    z-index: 50; gap: 12px; text-align: center; padding: 24px;
-  }
-  .error-icon { font-size: 3rem; }
-  .error-msg { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
-
-  /* ── EMPTY STATE ── */
+  /* EMPTY STATE */
   .empty-state {
-    display: none;
-    position: absolute; inset: 0;
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 12px;
-    background: linear-gradient(135deg, #fdf4ff, #e0f2fe);
-    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+    gap: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
   }
-  .empty-icon { font-size: 3.5rem; }
-  .empty-title { font-family: 'Bubblegum Sans', cursive; font-size: 1.5rem; color: #7B2D8B; }
-  .empty-sub { font-size: 0.85rem; color: #6B7280; }
+  .empty-state .icon { font-size: 3rem; }
 
-  @media (max-width: 500px) {
-    .slide-caption { padding: 40px 24px 52px; }
-    .nav-btn { width: 38px; height: 38px; font-size: 1rem; }
+  /* LOADING */
+  .loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
   }
+  .loader {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255,255,255,0.15);
+    border-top-color: #FFD700;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="slider" id="slider">
-
-
-  <div class="loading-state" id="loading">
-    <div class="loading-logo">🏫 KB-TK Putra IX</div>
-    <div class="loading-dots">
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-    </div>
-  </div>
-
-  <!-- ERROR -->
-  <div class="error-state" id="error-state">
-    <div class="error-icon">⚠️</div>
-    <div class="error-msg" id="error-msg">Gagal memuat banner. Cek URL Apps Script.</div>
-  </div>
-
-  <!-- EMPTY -->
-  <div class="empty-state" id="empty-state">
-    <div class="empty-icon">🖼️</div>
-    <div class="empty-title">Belum Ada Banner</div>
-    <div class="empty-sub">Tambahkan banner lewat panel admin.</div>
-  </div>
-
-  <!-- SLIDES (diisi JS) -->
-  <div id="slides-container"></div>
-
-  <!-- NAV -->
-  <button class="nav-btn nav-prev" id="btn-prev" onclick="prevSlide()" aria-label="Sebelumnya">&#8249;</button>
-  <button class="nav-btn nav-next" id="btn-next" onclick="nextSlide()" aria-label="Berikutnya">&#8250;</button>
-
-  <!-- DOTS -->
-  <div class="dots" id="dots"></div>
-
-  <!-- PROGRESS -->
-  <div class="progress-bar" id="progress-bar"></div>
-
+<div id="root">
+  <div class="loading-screen"><div class="loader"></div></div>
 </div>
 
 <script>
 // ============================================================
-//  GANTI INI dengan URL Apps Script kamu!
+//  GANTI URL INI DENGAN URL APPS SCRIPT KAMU
 // ============================================================
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhblsJ-N7V9gqntHjgmD9ED31dtulchTC-_AlFkN4pI-7Aj-lbJE6mgNvrhkpSAKhWmA/exec';
 // ============================================================
 
-const AUTOPLAY_DURATION = 5000; // ms per slide
-
+const INTERVAL = 5000; // ganti interval (ms) antar slide, default 5 detik
 let banners = [];
 let current = 0;
 let timer = null;
 let progressTimer = null;
 
-async function fetchBanners() {
+async function init() {
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?type=banner&t=${Date.now()}`);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    banners = data.filter(b => b.id).sort((a, b) => Number(a.urutan) - Number(b.urutan));
-  } catch (e) {
-    showError('Gagal memuat banner. Pastikan URL Apps Script sudah benar dan bisa diakses publik.');
-    return;
+    banners = await res.json();
+    banners.sort((a, b) => Number(a.urutan) - Number(b.urutan));
+  } catch(e) {
+    banners = [];
   }
+  render();
+}
 
-  hideLoading();
-
+function render() {
+  const root = document.getElementById('root');
   if (!banners.length) {
-    document.getElementById('empty-state').style.display = 'flex';
-    document.getElementById('btn-prev').style.display = 'none';
-    document.getElementById('btn-next').style.display = 'none';
+    root.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">🖼️</div>
+        <div>Belum ada banner yang ditambahkan.</div>
+      </div>`;
     return;
   }
 
-  buildSlides();
-  buildDots();
-  goTo(0);
-  startAutoplay();
-}
+  root.innerHTML = `
+    <div class="slider-wrap" id="slider">
+      ${banners.map((b, i) => `
+        <div class="slide${i === 0 ? ' active' : ''}" id="slide-${i}">
+          <img src="https://drive.google.com/thumbnail?id=${b.id}&sz=w1280"
+               alt="${b.judul || ''}"
+               onerror="this.style.display='none'">
+          <div class="slide-overlay"></div>
+          <div class="slide-text">
+            ${b.judul ? `<div class="slide-title">${b.judul}</div>` : ''}
+            ${b.subjudul ? `<div class="slide-sub">${b.subjudul}</div>` : ''}
+          </div>
+        </div>
+      `).join('')}
 
-function buildSlides() {
-  const container = document.getElementById('slides-container');
-  container.innerHTML = banners.map((b, i) => `
-    <div class="slide" id="slide-${i}" role="group" aria-label="Slide ${i+1}">
-      <img
-        class="slide-img"
-        src="https://drive.google.com/thumbnail?id=${b.id}&sz=w1280"
-        alt="${b.judul || ''}"
-        loading="${i === 0 ? 'eager' : 'lazy'}"
-        onerror="this.src='https://via.placeholder.com/1280x480/7B2D8B/ffffff?text=KB-TK+Putra+IX'"
-      >
-      <div class="slide-overlay"></div>
-      <div class="slide-deco">
-        <div class="deco-circle"></div>
-        <div class="deco-circle"></div>
-        <div class="deco-circle"></div>
-      </div>
-      ${b.judul ? `
-      <div class="slide-caption">
-        <div class="caption-tag">KB-TK Putra IX</div>
-        <div class="caption-title">${b.judul}</div>
-        ${b.subjudul ? `<div class="caption-sub">${b.subjudul}</div>` : ''}
-      </div>
+      ${banners.length > 1 ? `
+        <button class="nav-btn nav-prev" onclick="go(-1)">&#8592;</button>
+        <button class="nav-btn nav-next" onclick="go(1)">&#8594;</button>
       ` : ''}
-    </div>
-  `).join('');
+
+      <div class="dots" id="dots">
+        ${banners.map((_, i) => `<div class="dot${i === 0 ? ' active' : ''}" onclick="goTo(${i})"></div>`).join('')}
+      </div>
+
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>`;
+
+  if (banners.length > 1) startAuto();
 }
 
-function buildDots() {
-  const dotsEl = document.getElementById('dots');
-  if (banners.length <= 1) { dotsEl.style.display = 'none'; return; }
-  dotsEl.innerHTML = banners.map((_, i) =>
-    `<button class="dot ${i===0?'active':''}" onclick="goTo(${i})" aria-label="Slide ${i+1}"></button>`
-  ).join('');
-  if (banners.length <= 1) {
-    document.getElementById('btn-prev').style.display = 'none';
-    document.getElementById('btn-next').style.display = 'none';
-  }
-}
-
-function goTo(idx) {
-  // remove active from current
-  const prevSlide = document.getElementById('slide-' + current);
-  if (prevSlide) prevSlide.classList.remove('active');
-  const prevDot = document.querySelector('.dot.active');
-  if (prevDot) prevDot.classList.remove('active');
-
-  current = (idx + banners.length) % banners.length;
-
-  const nextSlide = document.getElementById('slide-' + current);
-  if (nextSlide) nextSlide.classList.add('active');
-  const dots = document.querySelectorAll('.dot');
-  if (dots[current]) dots[current].classList.add('active');
-
+function goTo(n) {
+  document.getElementById('slide-' + current)?.classList.remove('active');
+  document.querySelectorAll('.dot')[current]?.classList.remove('active');
+  current = (n + banners.length) % banners.length;
+  document.getElementById('slide-' + current)?.classList.add('active');
+  document.querySelectorAll('.dot')[current]?.classList.add('active');
   resetProgress();
 }
 
-function prevSlide() {
-  stopAutoplay();
-  goTo(current - 1);
-  startAutoplay();
+function go(dir) {
+  clearTimers();
+  goTo(current + dir);
+  startAuto();
 }
 
-function nextSlide() {
-  stopAutoplay();
-  goTo(current + 1);
-  startAutoplay();
-}
-
-function startAutoplay() {
-  stopAutoplay();
-  if (banners.length <= 1) return;
-  timer = setInterval(() => goTo(current + 1), AUTOPLAY_DURATION);
-  startProgress();
-}
-
-function stopAutoplay() {
-  clearInterval(timer);
-  clearTimeout(progressTimer);
-}
-
-function startProgress() {
-  const bar = document.getElementById('progress-bar');
-  bar.style.transition = 'none';
-  bar.style.width = '0%';
-  requestAnimationFrame(() => {
-    bar.style.transition = `width ${AUTOPLAY_DURATION}ms linear`;
-    bar.style.width = '100%';
-  });
+function startAuto() {
+  clearTimers();
+  resetProgress();
+  timer = setTimeout(() => { goTo(current + 1); startAuto(); }, INTERVAL);
 }
 
 function resetProgress() {
   const bar = document.getElementById('progress-bar');
+  if (!bar) return;
   bar.style.transition = 'none';
   bar.style.width = '0%';
+  requestAnimationFrame(() => {
+    bar.style.transition = `width ${INTERVAL}ms linear`;
+    bar.style.width = '100%';
+  });
 }
 
-function hideLoading() {
-  const el = document.getElementById('loading');
-  el.classList.add('hidden');
-  setTimeout(() => el.style.display = 'none', 500);
-}
-
-function showError(msg) {
-  hideLoading();
-  const el = document.getElementById('error-state');
-  document.getElementById('error-msg').textContent = msg;
-  el.style.display = 'flex';
+function clearTimers() {
+  clearTimeout(timer);
+  clearTimeout(progressTimer);
 }
 
 // Pause on hover
-document.getElementById('slider').addEventListener('mouseenter', stopAutoplay);
-document.getElementById('slider').addEventListener('mouseleave', () => {
-  startAutoplay();
+document.addEventListener('mouseover', e => {
+  if (e.target.closest('#slider')) clearTimeout(timer);
+});
+document.addEventListener('mouseout', e => {
+  if (e.target.closest('#slider') && banners.length > 1) startAuto();
 });
 
-// Keyboard navigation
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') prevSlide();
-  if (e.key === 'ArrowRight') nextSlide();
+// Touch / swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const diff = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) go(diff > 0 ? 1 : -1);
 });
 
-// Touch swipe
-let touchStartX = 0;
-document.getElementById('slider').addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
-document.getElementById('slider').addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].screenX;
-  if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-}, { passive: true });
-
-// INIT
-if (APPS_SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_KAMU') {
-  showError('URL Apps Script belum diisi. Buka file hero-banner.html dan isi variabel APPS_SCRIPT_URL.');
-} else {
-  fetchBanners();
-}
+init();
 </script>
 </body>
 </html>
