@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery KB-TK PUTRA IX</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: transparent;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: hidden;
+    gap: 0;
+  }
+
+  /* ---- Title ---- */
+  .title-block {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .title-block .sub {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.65rem, 2vw, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #f97316;
+    margin-bottom: 6px;
+  }
+
+  .title-block h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    color: #1e3a5f;
+    line-height: 1.1;
+  }
+
+  .title-block h1 span {
+    color: #f97316;
+  }
+
+  .title-block .underline-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .title-block .underline-deco .line {
+    height: 2px;
+    width: 40px;
+    border-radius: 2px;
+    background: #f97316;
+    opacity: 0.5;
+  }
+
+  .title-block .underline-deco .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f97316;
+  }
+
+  @media (max-width: 640px) {
+    .title-block { margin-bottom: 14px; }
+  }
+
+  /* ---- Scroll area ---- */
+  .scroll-area {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  @media (min-width: 641px) {
+    .scroll-area { gap: 16px; }
+  }
+
+  .track-3-wrap { display: none; }
+  @media (min-width: 641px) {
+    .track-3-wrap { display: block; }
+  }
+
+  /* ---- Tracks ---- */
+  .track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    will-change: transform;
+  }
+
+  @media (min-width: 641px) {
+    .track { gap: 16px; }
+  }
+
+  .track-1 { animation: goLeft  26s linear infinite; }
+  .track-2 { animation: goRight 30s linear infinite; }
+  .track-3 { animation: goLeft  34s linear infinite; }
+
+  @keyframes goLeft  { from { transform: translateX(0);    } to { transform: translateX(-50%); } }
+  @keyframes goRight { from { transform: translateX(-50%); } to { transform: translateX(0);    } }
+
+  /* ---- Card ---- */
+  .card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card:hover,
+  .card:active {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.38);
+    transform: scale(1.05);
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+  }
+
+  .card:hover img,
+  .card:active img { transform: scale(1.1); }
+
+  .card-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 28px 10px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.72), transparent);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.28s, transform 0.28s;
+  }
+
+  .card:hover .card-label,
+  .card:active .card-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card sizes - Mobile */
+  .card-sm  { width: 130px; height: 100px; }
+  .card-md  { width: 165px; height: 118px; }
+  .card-lg  { width: 200px; height: 130px; }
+
+  /* Card sizes - Desktop */
+  @media (min-width: 641px) {
+    .card-sm  { width: 220px; height: 155px; }
+    .card-md  { width: 280px; height: 190px; }
+    .card-lg  { width: 340px; height: 215px; }
+  }
+
+  /* Fade edges */
+  .fade-left, .fade-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    z-index: 5;
+    pointer-events: none;
+    width: 50px;
+  }
+
+  @media (min-width: 641px) {
+    .fade-left, .fade-right { width: 100px; }
+  }
+
+  .fade-left  { left: 0;  background: linear-gradient(to right, rgba(255,255,255,0.88), transparent); }
+  .fade-right { right: 0; background: linear-gradient(to left,  rgba(255,255,255,0.88), transparent); }
+
+  /* ---- Lightbox ---- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 16px;
+  }
+
+  .lightbox.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .lightbox-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.88);
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .lightbox.active .lightbox-inner { transform: scale(1); }
+
+  .lightbox-inner img {
+    max-width: 92vw;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+    object-fit: contain;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    display: block;
+  }
+
+  .lightbox-caption {
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: rgba(255,255,255,0.14);
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .lightbox-close:hover { background: rgba(255,255,255,0.28); }
+</style>
+</head>
+<body>
+
+<section class="gallery-section">
+
+  <div class="title-block">
+    <div class="sub">Dokumentasi Aktivitas</div>
+    <h1>Kegiatan Anak-Anak di <span>KB-TK PUTRA IX</span></h1>
+    <div class="underline-deco">
+      <div class="line"></div>
+      <div class="dot"></div>
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <div style="position:relative; width:100%;">
+    <div class="fade-left"></div>
+    <div class="fade-right"></div>
+
+    <div class="scroll-area">
+      <div class="track track-1" id="track1"></div>
+      <div class="track track-2" id="track2"></div>
+      <div class="track-3-wrap">
+        <div class="track track-3" id="track3"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lbClose">&#x2715;</button>
+    <img id="lbImg" src="" alt="">
+    <div class="lightbox-caption" id="lbCaption"></div>
+  </div>
+</div>
+
+<script>
+  const photos = [
+    { id: '1TEViRqrhQB2qu3YTkzzCFgy8FB4_wf-R', label: 'Kelompok B - Praktek Sholat',   size: 'card-lg' },
+    { id: '1TEViRqrhQB2qu3YTkzzCFgy8FB4_wf-R', label: 'Kelompok B - Cooking Class',    size: 'card-md' },
+    { id: '1wDwj3UmgfMeGq8dJaYeqRy7VwASlQO9p', label: 'Literasi Kebersihan Gigi',      size: 'card-sm' },
+    { id: '1HaXtn8Z6y4adBWslZyB4IBkr3OwxCGRn', label: 'Kelas KB - Bermain Outdoor',   size: 'card-md' },
+    { id: '14-XPj6bCsBrVlgt496myANjnMzJ_U9GJ', label: 'Kelas KB 2 - Bahasa Inggris',  size: 'card-lg' },
+    { id: '17R4xgvTpCkWUuYjB09fEBcTeYnGTJShA', label: 'Kelas KB 2 - Bermain Sepeda',  size: 'card-sm' },
+    { id: '1MI-oZSP_oL48uuQtWM737iwl64WD7ZEY', label: 'Kelompok A - Melukis',         size: 'card-sm' },
+    { id: '1pP5ezQnRsDU-G-RJ3I-AI86eYRrWRq8S', label: 'Kelompok A - Bermain Outdoor', size: 'card-lg' },
+    { id: '1Nj-39IXLDUg5mh_RPe8dAuRb6GSGZ7zf', label: 'Kelompok A - Story Telling',   size: 'card-md' },
+  ];
+
+  function gdUrl(id) {
+    return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+  }
+
+  function makeCard(photo) {
+    const div = document.createElement('div');
+    div.className = `card ${photo.size}`;
+    div.innerHTML = `
+      <img src="${gdUrl(photo.id)}" alt="${photo.label}" loading="lazy">
+      <div class="card-label">${photo.label}</div>
+    `;
+    div.addEventListener('click', () => openLightbox(photo));
+    return div;
+  }
+
+  function buildTrack(trackEl, indices) {
+    [0, 1].forEach(() => indices.forEach(i => trackEl.appendChild(makeCard(photos[i]))));
+  }
+
+  buildTrack(document.getElementById('track1'), [0,1,2]);
+  buildTrack(document.getElementById('track2'), [3,4,5]);
+  buildTrack(document.getElementById('track3'), [6,7,8]);
+
+  const lightbox  = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+
+  function openLightbox(photo) {
+    lbImg.src = gdUrl(photo.id);
+    lbCaption.textContent = photo.label;
+    lightbox.classList.add('active');
+  }
+
+  function closeLightbox() { lightbox.classList.remove('active'); }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+  let ty = 0;
+  lightbox.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { passive: true });
+  lightbox.addEventListener('touchend', e => {
+    if (e.changedTouches[0].clientY - ty > 60) closeLightbox();
+  });
+</script>
+</body>
+</html>
